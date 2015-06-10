@@ -60,9 +60,10 @@ class Verification_Controls_ReCaptcha implements Verification_Controls
 				$_SERVER["REMOTE_ADDR"],
 				$_POST["g-recaptcha-response"]
 			);
+			if (!$resp->success)
+				return 'wrong_verification_code';
 		}
-
-		if (!$resp->success)
+		else
 			return 'wrong_verification_code';
 
 		return true;
