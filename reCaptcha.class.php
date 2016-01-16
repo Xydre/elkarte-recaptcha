@@ -54,15 +54,16 @@ class Verification_Controls_ReCaptcha implements Verification_Controls
 	public function doTest()
 	{
 		$this->_recaptcha = new ReCaptcha($this->_secret_key);
+		$resp = null;
 
-		if ($_POST["g-recaptcha-response"]) {
+		if (isset($_POST["g-recaptcha-response"])) {
 			$resp = $this->_recaptcha->verifyResponse (
 				$_SERVER["REMOTE_ADDR"],
 				$_POST["g-recaptcha-response"]
 			);
 		}
 
-		if (!$resp->success)
+		if ($resp === null || !$resp->success)
 			return 'wrong_verification_code';
 
 		return true;
